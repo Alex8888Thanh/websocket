@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    Output Data Json:
+    <div id="outputData"></div>
+    Input Data Json:
+    <div id="inputData"></div>
+    <form id="msgForm">
+      <input type="text" placeholder="Input Data Json" id="inputData"/>
+      <input type="process" value="Send"/>
+    </form>
+    <script>
+      const ws = new WebSocket(
+        `ws://${window.document.location.host}`
+      )
+      ws.onmessage = function (message) {
+        const msgDiv = document.createElement('div')
+        msgDiv.innerHTML = message.data
+        document.getElementById('inputData').appendChild(msgDiv)
+        document.getElementById("outputData").innerHTML =
+      }
+      const form = document.getElementById('msgForm')
+      form.addEventListener('process', (event) => {
+        event.preventDefault()
+        const message = document.getElementById('inputData').value
+        ws.send(message)
+        document.getElementById('msgBox').value = ''
+      })
+    </script>
+  </body>
+</html>
